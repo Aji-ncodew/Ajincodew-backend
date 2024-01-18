@@ -42,6 +42,11 @@ function createTables() {
   `);
 }
 
+app.get("/time", (req, res) => {
+  const currentTime = new Date();
+  res.status(200).json({ time: currentTime });
+});
+
 // CRUD API routes for Courses
 app.get("/api/v1/courses", (req, res) => {
   const query = "SELECT * FROM Course";
