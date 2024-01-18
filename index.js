@@ -1,14 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const schemas = require("./models/schemas");
-const mongoose = require("mongoose");
-const mail = require("./mail");
+const sqlite3 = require("sqlite3").verbose();
 require("dotenv/config");
 
 const app = express();
 const port = process.env.PORT || 5000;
-const db_uri = process.env.DB_URI;
+const dbPath = process.env.DB_PATH || "./database.db";
 
 const corsOptions = {
   origin: "*",
@@ -16,99 +14,59 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-const dbOptions = { useNewUrlParser: true, useUnifiedTopology: true };
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
 
-app.get("/api/v1", (req, res) => {
-  res.send("AJINCODEW");
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error(err.message);
+  } else {
+    console.log("Connected to SQLite database");
+    createTables();
+  }
 });
 
-// // get all sessions
-// app.get("/api/v1/sessions", async (req, res) => {
-//   const sessions = await schemas.Sessions.find().exec();
+function createTables() {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS Course (
+      _id INTEGER PRIMARY KEY AUTOINCREMENT,
+      image TEXT,
+      type TEXT,
+      title TEXT,
+      speakers TEXT,
+      Year TEXT,
+      Duration TEXT,
+      link TEXT
+    )
+  `);
+}
 
-//   if (sessions) {
-//     res.status(200).json(sessions);
-//   } else {
-//     res.status(400).json({ message: "Error fetching sessions" });
-//   }
-// });
+// CRUD API routes for Courses
+app.get("/api/v1/courses", (req, res) => {
+  const query = "SELECT * FROM Course";
+  db.all(query, (err, courses) => {
+    if (err) {
+      console.error(err.message);
+      res.status(400).json({ message: "Error fetching courses" });
+    } else {
+      res.status(200).json(courses);
+    }
+  });
+});
 
-// // get session by cell
-// app.get("/api/v1/sessions/cells/:cell", async (req, res) => {
-//   const cell = req.params.cell;
-//   const sessions = await schemas.Sessions.find({ cell: cell }).exec();
-
-//   if (sessions) {
-//     res.status(200).json(sessions);
-//   } else {
-//     res.status(400).json({ message: "Error fetching sessions" });
-//   }
-// });
-
-// // post contact form
-// app.post("/api/v1/contact", async (req, res) => {
-//   const contactData = req.body;
-//   name = contactData.name;
-//   to = contactData.email;
-//   message = contactData.message;
-//   const sendMail = await mail.sendContactEmail({ name, to, message });
-//   if (sendMail) {
-//     res.status(200).json({ message: "Mail sent successfully" });
-//   } else {
-//     res.status(400).json({ message: "Error" });
-//   }
-
-//   res.end();
-// });
-
-// // update website visits and views
-// app.put("/api/v1/analytics/:type", async (req, res) => {
-//   const type = req.params.type;
-//   const analytics = await schemas.Analytics.findById(
-//     "656a38983da3b61d5f3d66cc"
-//   ).exec();
-//   analytics.views += 1;
-//   if (type === "visits") {
-//     analytics.visits += 1;
-//   }
-//   const updateAnalytics = await analytics.save();
-//   if (updateAnalytics) {
-//     res.status(200).json(analytics);
-//   } else {
-//     res.status(400).json({ message: "Error updating analytics" });
-//   }
-// });
-
-// // get website visits and views
-// app.get("/api/v1/analytics", async (req, res) => {
-//   const analytics = await schemas.Analytics.findById(
-//     "656a38983da3b61d5f3d66cc"
-//   ).exec();
-//   if (analytics) {
-//     res.status(200).json(analytics);
-//   } else {
-//     res.status(400).json({ message: "Error fetching analytics" });
-//   }
-// });
-
-// // get all blogs
-// app.get("/api/v1/blogs", async (req, res) => {
-//   const blogs = await schemas.Blogs.find().exec();
-
-//   if (blogs) {
-//     res.status(200).json(blogs);
-//   } else {
-//     res.status(400).json({ message: "Error fetching blogs" });
-//   }
-// });
-
-// mongoose.connect(db_uri, dbOptions).then(() => {
-//   console.log("Connected to MongoDB");
-// });
+app.post("/api/v1/courses", (req, res) => {
+  const { image, type, title, speakers, Year, Duration,link } = req.body;
+  const query = "INSERT INTO Course (image, type, title, speakers, Year, Duration,link) VALUES (?, ?, ?, ?, ?, ?, ?)";
+  db.run(query, [image, type, title, speakers, Year, Duration,link], function (err) {
+    if (err) {
+      console.error(err.message);
+      res.status(400).json({ message: "Error creating course" });
+    } else {
+      res.status(201).json({ message: "Course created", course_id: this.lastID });
+    }
+  });
+});
 
 const server = app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
