@@ -48,7 +48,7 @@ app.get("/time", (req, res) => {
 });
 
 // CRUD API routes for Courses
-app.get("/api/v1/courses", (req, res) => {
+app.get("/", (req, res) => {
   const query = "SELECT * FROM Course";
   db.all(query, (err, courses) => {
     if (err) {
