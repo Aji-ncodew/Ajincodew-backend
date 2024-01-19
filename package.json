@@ -2,9 +2,9 @@
   "name": "nodejs-mongodb",
   "version": "1.0.0",
   "description": "Nodejs and MongoDB",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node main.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
