@@ -1,6 +1,6 @@
 // routes/blogRoutes.js
 const express = require('express');
-const router = express.Router();
+const blogRoutes = express.Router();
 const {
   getAllBlogs,
   getBlogById,
@@ -10,10 +10,10 @@ const {
 } = require('../controllers/blogController');
 
 // CRUD routes
-router.get('/blogs', getAllBlogs);
-router.get('/blogs/:blogId', getBlogById);
-router.post('/blogs', createBlog);
-router.put('/blogs/:blogId', updateBlog);
-router.delete('/blogs/:blogId', deleteBlog);
+blogRoutes.get('/blogs', getAllBlogs);
+blogRoutes.get('/blogs/:blogId', getBlogById);
+blogRoutes.post('/blogs', createBlog);
+blogRoutes.put('/blogs/:blogId', updateBlog);
+blogRoutes.delete('/blogs/:blogId', deleteBlog);
 
-module.exports = router;
+module.exports = blogRoutes;
