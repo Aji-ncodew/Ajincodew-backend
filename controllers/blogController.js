@@ -1,4 +1,3 @@
-// blogs.js
 const { db } = require("../firebase/admin.js");
 
 const blogsCollection = db.collection('blogs');

@@ -1,9 +1,10 @@
-
-
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+const { initializeApp } = require("firebase/app");
 require('dotenv').config();
+const firebase = require("firebase/app");
+require("firebase/auth");
+require("firebase/firestore");
+
 const apiKey = process.env.apiKey;
 const authDomain = process.env.authDomain;
 const projectId = process.env.projectId;
@@ -11,11 +12,8 @@ const storageBucket = process.env.storageBucket;
 const messagingSenderId = process.env.messagingSenderId;
 const appId = process.env.appId;
 const measurementId = process.env.measurementId;
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: apiKey,
   authDomain: authDomain,
@@ -28,8 +26,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
-
-firebase.initializeApp(firebaseConfig); //initialize firebase app 
-module.exports = { firebase,analytics }; //export the app
+module.exports = { firebase };
