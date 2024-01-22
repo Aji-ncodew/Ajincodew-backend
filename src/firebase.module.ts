@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as admin from 'firebase-admin';
 import { FirebaseRepository } from './FirebaseRepository';
 require('dotenv').config();
@@ -31,7 +32,7 @@ const firebaseProvider = {
 };
 
 @Module({
-    imports: [],
+    imports: [ConfigModule],
     providers: [firebaseProvider, FirebaseRepository],
     exports: [FirebaseRepository],
   })
