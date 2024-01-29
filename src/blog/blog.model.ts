@@ -1,6 +1,6 @@
-export class blog{
+export class Blog{
     constructor(
-        public id: string, 
+        public _id: string, 
         public updateDate:Date, 
         public author:string, 
         public publishDate:Date,

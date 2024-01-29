@@ -1,28 +1,28 @@
 // blog.controller.ts
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { BlogService } from './blog.service';
-import { blog } from './blog.model';
+import { Blog } from './blog.model';
 
 @Controller('blogs')
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
   @Post()
-  async addblog(
-    @Body() newBlog: blog,
-  ): Promise<blog> {
+  async addBlog(
+    @Body() newBlog: Blog,
+  ): Promise<Blog> {
     return this.blogService.addblog(newBlog);
   }
 
   @Get()
-  async getblogs(): Promise<blog[]> {
+  async getblogs(): Promise<Blog[]> {
     return this.blogService.getblogs();
   }
 
   @Get(':id')
   async getblogById(
     @Param('id') prodId: string,
-  ): Promise<blog> {
+  ): Promise<Blog> {
     return this.blogService.getblogById(prodId);
   }
 
@@ -35,8 +35,8 @@ export class BlogController {
 
   @Patch()
   async updateblog(
-    @Body() updatedBlog: blog,
-  ): Promise<blog | { Error: string }> {
+    @Body() updatedBlog: Blog,
+  ): Promise<Blog | { Error: string }> {
     return this.blogService.updateblog(updatedBlog);
   }
 }
