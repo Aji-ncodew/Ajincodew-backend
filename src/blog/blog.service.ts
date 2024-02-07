@@ -8,7 +8,7 @@ export class BlogService {
   private collection: FirebaseFirestore.CollectionReference;
 
   constructor(private firebaseRepository: FirebaseRepository) {
-    this.collection = this.firebaseRepository.getCollection('blogs'); // Replace 'blogs' with your desired collection name
+    this.collection = this.firebaseRepository.getCollection('blogs');
   }
 
   async addblog(blog: Blog): Promise<Blog> {

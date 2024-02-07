@@ -18,6 +18,7 @@ export class AuthController {
     return this.authService.signUp(user);
   }
 
+  // This endpoint is juste for test
   @UseGuards(LocalAuthGuard)
   @Roles('admin')
   @Get('data')

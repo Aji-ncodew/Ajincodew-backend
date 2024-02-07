@@ -1,7 +1,9 @@
 // blog.controller.ts
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { Blog } from './blog.model';
+import { Roles } from 'src/auth/roles.decorator';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 
 @Controller('blogs')
 export class BlogController {
@@ -14,6 +16,8 @@ export class BlogController {
     return this.blogService.addblog(newBlog);
   }
 
+  @UseGuards(LocalAuthGuard)
+  @Roles('admin')
   @Get()
   async getblogs(): Promise<Blog[]> {
     return this.blogService.getblogs();

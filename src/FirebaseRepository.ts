@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { app } from 'firebase-admin';
+require('dotenv').config();
 
 @Injectable()
 export class FirebaseRepository {
   #db: FirebaseFirestore.Firestore;
 
-  constructor(@Inject('FIREBASE_APP') private firebaseApp: app.App) {
+  constructor(@Inject(process.env.FIREBASE_APP) private firebaseApp: app.App) {
     this.#db = firebaseApp.firestore();
   }
 

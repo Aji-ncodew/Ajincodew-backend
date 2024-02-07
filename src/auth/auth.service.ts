@@ -22,16 +22,16 @@ export class AuthService {
   }
   
   async login(username: string, password: string) {
-    const user = await this.validateUser(username, password);
-    if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-    const payload = { username: user.username, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload, { secret: process.env.JWT_SECRET }),
-    };
+  const user = await this.validateUser(username, password);
+  if (!user) {
+    throw new UnauthorizedException('Invalid credentials');
   }
-  
+  const payload = { username: user.username, sub: user.id };
+  return {
+    access_token: this.jwtService.sign(payload, { secret: 'zezr8f54zef8zeaepoijfirjzfef7877z89ref456zerf8ez54rf89e4fze5f4' }),
+  };
+}
+
 
   async signUp(user: User) {
     // Assign admin role to the user

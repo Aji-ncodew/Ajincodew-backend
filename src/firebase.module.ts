@@ -6,7 +6,7 @@ require('dotenv').config();
 
 
 const firebaseProvider = {
-  provide: 'FIREBASE_APP',
+  provide: process.env.FIREBASE_APP,
   inject: [],
   useFactory: () => {
     const firebaseConfig = {
@@ -25,7 +25,7 @@ const firebaseProvider = {
 
     return admin.initializeApp({
       credential: admin.credential.cert(firebaseConfig),
-      databaseURL: 'https://ajincodew-a61d8-default-rtdb.firebaseio.com/', // Ensure correct database URL here
+      databaseURL: 'https://ajincodew-a61d8-default-rtdb.firebaseio.com/',
       storageBucket: 'ajincodew-a61d8.appspot.com',
     });    
   },
@@ -34,6 +34,6 @@ const firebaseProvider = {
 @Module({
     imports: [ConfigModule],
     providers: [firebaseProvider, FirebaseRepository],
-    exports: [FirebaseRepository, 'FIREBASE_APP'],
+    exports: [FirebaseRepository, process.env.FIREBASE_APP],
   })
   export class FirebaseModule {}

@@ -1,6 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { User } from './user.model';
+require('dotenv').config();
+
 
 @Injectable()
 export class UsersService {
@@ -9,14 +11,13 @@ export class UsersService {
   constructor(
     @Inject('FIREBASE_APP') private readonly firebaseApp: admin.app.App,
   ) {
-    // Get a reference to the Firebase Realtime Database
     this.db = this.firebaseApp.database();
   }
 
   async getUserByEmail(email: string): Promise<any> {
     const snapshot = await this.db.ref('users').orderByChild('username').equalTo(email).once('value');
     const userData = snapshot.val();
-    // Assuming there's only one user per email, return the first user found
+
     if (userData) {
       const userId = Object.keys(userData)[0];
       return { id: userId, ...userData[userId] };

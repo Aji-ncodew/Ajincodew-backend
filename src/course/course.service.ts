@@ -1,6 +1,6 @@
 // course.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Course } from './course.model';  // Import the Course model
+import { Course } from './course.model'; 
 import { FirebaseRepository } from 'src/FirebaseRepository';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class CourseService {
   private collection: FirebaseFirestore.CollectionReference;
 
   constructor(private firebaseRepository: FirebaseRepository) {
-    this.collection = this.firebaseRepository.getCollection('courses'); // Replace 'courses' with your desired collection name
+    this.collection = this.firebaseRepository.getCollection('courses'); 
   }
 
   async addCourse(course: Course): Promise<Course> {

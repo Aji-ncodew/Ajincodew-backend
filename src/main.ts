@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from './App.module';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import * as express from 'express';
 require('dotenv').config();
@@ -11,7 +11,6 @@ async function bootstrap() {
     new ExpressAdapter(server),
   );
 
-  // Enable CORS
   app.enableCors();
 
   const port = process.env.PORT || 1000; 
