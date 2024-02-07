@@ -13,6 +13,18 @@ export class UsersService {
     this.db = this.firebaseApp.database();
   }
 
+  async getUserByEmail(email: string): Promise<any> {
+    const snapshot = await this.db.ref('users').orderByChild('username').equalTo(email).once('value');
+    const userData = snapshot.val();
+    // Assuming there's only one user per email, return the first user found
+    if (userData) {
+      const userId = Object.keys(userData)[0];
+      return { id: userId, ...userData[userId] };
+    }
+    return null;
+  }
+
+  
   async addUser(user: any): Promise<void> {
     await this.db.ref('users').push(user);
   }
