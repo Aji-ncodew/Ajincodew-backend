@@ -25,15 +25,15 @@ const firebaseProvider = {
 
     return admin.initializeApp({
       credential: admin.credential.cert(firebaseConfig),
-      databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
-      storageBucket: `${firebaseConfig.projectId}.appspot.com`,
-    });
+      databaseURL: 'https://ajincodew-a61d8-default-rtdb.firebaseio.com/', // Ensure correct database URL here
+      storageBucket: 'ajincodew-a61d8.appspot.com',
+    });    
   },
 };
 
 @Module({
     imports: [ConfigModule],
     providers: [firebaseProvider, FirebaseRepository],
-    exports: [FirebaseRepository],
+    exports: [FirebaseRepository, 'FIREBASE_APP'],
   })
   export class FirebaseModule {}

@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from 'src/user/users.service'; 
 import { User } from 'src/user/user.model';
+import { UsersService } from 'src/user/users.service';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +11,7 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string): Promise<User> {
-    const user = await this.usersService.findOne(username);
+    const user = await this.usersService.getUserByUsername(username);
     if (user && user.password === password) {
       return user;
     }
@@ -26,6 +26,9 @@ export class AuthService {
   }
 
   async signUp(user: User) {
-    return this.usersService.createUser(user);
+    // Assign admin role to the user
+    user.roles = ['admin'];
+
+    return this.usersService.addUser(user);
   }
 }
