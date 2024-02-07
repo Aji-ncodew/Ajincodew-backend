@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { FirebaseModule } from './Firebase.module'; // Adjust the path as necessary
+import { FirebaseModule } from './firebase.module'; // Adjust the path as necessary
 import { ConfigModule } from '@nestjs/config';
 import { BlogModule } from './blog/blog.module';
 import { UsersModule } from './user/users.module';

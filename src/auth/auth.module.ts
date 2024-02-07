@@ -7,7 +7,7 @@ import { LocalStrategy } from './local.strategy';
 import { AuthController } from './auth.controller';
 import { UsersService } from '../user/users.service'; 
 import { JwtService } from '@nestjs/jwt'; 
-import { FirebaseModule } from '../Firebase.module';
+import { FirebaseModule } from '../firebase.module';
 require('dotenv').config();
 
 @Module({

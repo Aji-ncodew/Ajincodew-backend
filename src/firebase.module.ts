@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as admin from 'firebase-admin';
-import { FirebaseRepository } from './FirebaseRepository';
+import { FirebaseRepository } from './firebaseRepository';
 require('dotenv').config();
 
 

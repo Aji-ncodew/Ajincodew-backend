@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { BlogController } from './blog.controller';
 import { BlogService } from './blog.service';
-import { FirebaseModule } from 'src/Firebase.module';
+import { FirebaseModule } from 'src/firebase.module';
 
 
 @Module({

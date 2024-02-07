@@ -1,7 +1,7 @@
 // course.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Course } from './course.model'; 
-import { FirebaseRepository } from 'src/FirebaseRepository';
+import { FirebaseRepository } from 'src/firebaseRepository';
 
 @Injectable()
 export class CourseService {

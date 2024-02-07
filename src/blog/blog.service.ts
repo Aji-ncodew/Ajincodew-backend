@@ -1,7 +1,7 @@
 // blog.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Blog } from './blog.model';
-import { FirebaseRepository } from 'src/FirebaseRepository';
+import { FirebaseRepository } from 'src/firebaseRepository';
 
 @Injectable()
 export class BlogService {
