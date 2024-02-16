@@ -30,13 +30,35 @@ export class AuthService {
     };
   }
 
-  async signUp(user: User) {
+  async createAdmin(user: User) {
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
 
     // Assign admin role to the user
     user.roles = ['admin'];
+
+    return this.usersService.addUser(user);
+  }
+
+  async createOfficeMember(user: User) {
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password = hashedPassword;
+
+    // Assign admin role to the user
+    user.roles = ['office'];
+
+    return this.usersService.addUser(user);
+  }
+
+  async createAbonne(user: User) {
+    // Hash the password before saving
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password = hashedPassword;
+
+    // Assign admin role to the user
+    user.roles = ['abonne'];
 
     return this.usersService.addUser(user);
   }

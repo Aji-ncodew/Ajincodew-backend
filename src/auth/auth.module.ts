@@ -2,12 +2,13 @@ import { Module } from '@nestjs/common';
 import { UsersModule } from '../user/users.module';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
-import { PassportModule } from '@nestjs/passport';
+import { AuthGuard, PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy'; 
 import { AuthController } from './auth.controller';
 import { UsersService } from '../user/users.service'; 
 import { JwtService } from '@nestjs/jwt'; 
 import { FirebaseModule } from '../firebase.module';
+
 require('dotenv').config();
 
 @Module({
@@ -18,7 +19,7 @@ require('dotenv').config();
       signOptions: { expiresIn: '1d' }, 
     }),
     UsersModule,
-    FirebaseModule, 
+    FirebaseModule
   ],
   providers: [AuthService, LocalStrategy, UsersService, JwtService], 
   controllers: [AuthController],
